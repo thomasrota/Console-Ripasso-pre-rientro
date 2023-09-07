@@ -162,8 +162,8 @@ namespace Form_Ripasso_pre_rientro
             for (int i = 0; i < nCampi; i++)
             {
                 line += inputs[i] + ";";
-                /*if (inputs[i].Length == 0)
-                   return false;*/
+                if (inputs[i].Length == 0)
+                   return false;
             }
             if (nCampi == 11)
                 if (line.Length < 500)

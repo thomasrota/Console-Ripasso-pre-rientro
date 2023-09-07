@@ -52,7 +52,6 @@ namespace Console_Ripasso_pre_rientro
 						Console.ForegroundColor = ConsoleColor.Green;
 						Console.WriteLine($"Il numero dei campi è: {nCampi}\n Premere un tasto per continuare...");
 						Console.ResetColor();
-						Console.ReadKey();
 						break;
 					case "3":
 						int fields = f.ContaCampi(path);
@@ -91,6 +90,36 @@ namespace Console_Ripasso_pre_rientro
 					case "5":
 						break;
 					case "6":
+						Console.Clear();
+						Console.Write("Inserisci l'elemento da ricercare: ");
+						string searchItem = Console.ReadLine();
+						Tuple<string, int> searchResult = f.Ricerca(path, searchItem, false);
+						if (searchItem == "")
+						{
+							Console.ForegroundColor = ConsoleColor.Red;
+							Console.WriteLine("\nErrore! Inserire un valore da cercare!");
+							Console.ResetColor();
+						}
+						else
+						{
+							if (searchResult.Item2 == -1)
+							{
+								Console.ForegroundColor = ConsoleColor.Red;
+								Console.WriteLine("\nErrore! Il record cercato non è stato trovato!");
+								Console.ResetColor();
+							}
+							else
+							{
+								Console.Write($"\nRecord:");
+								Console.ForegroundColor = ConsoleColor.Green;
+								Console.WriteLine(searchResult.Item1);
+								Console.ResetColor();
+								Console.Write($"\nTrovato alla riga: ");
+								Console.ForegroundColor = ConsoleColor.Green;
+								Console.WriteLine(searchResult.Item2);
+								Console.ResetColor();
+							}
+						}
 						break;
 					case "7":
 						break;
@@ -106,10 +135,10 @@ namespace Console_Ripasso_pre_rientro
 							Console.ForegroundColor = ConsoleColor.Red;
 							Console.Write("\nScelta non valida!");
 							Console.ResetColor();
-							Console.ReadKey();
 						}
 						break;
 				}
+				Console.ReadKey();
 			} while (continua);
 
 		}
