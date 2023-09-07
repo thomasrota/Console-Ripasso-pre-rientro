@@ -15,6 +15,7 @@ namespace Console_Ripasso_pre_rientro
 			Funzioni f = new Funzioni();
 			string path = "rota.csv";
 			string pathTEMP = @"rotaTEMP.csv";
+			int lRecord = 504;
 			#endregion
 			bool continua = true;
 			string options = "1) Aggiungi 'Mio valore'\n2) Conta campi\n3) Lunghezza record/campi\n4) Aggiungi record in coda\n5) Visualzza\n6) Ricerca\n7) Modifica\n8) Cancellazione logica\n9) Esci";
@@ -122,6 +123,70 @@ namespace Console_Ripasso_pre_rientro
 						}
 						break;
 					case "7":
+						string[] cN = f.NomeCampi(path);
+						Random rnd = new Random();
+						Console.Clear();
+						Console.Write("Inserisci l'elemento da ricercare: ");
+						string modSearchItem = Console.ReadLine();
+						Tuple<string, int> modSearchResult = f.Ricerca(path, modSearchItem, false);
+						if (modSearchItem == "")
+						{
+							Console.ForegroundColor = ConsoleColor.Red;
+							Console.WriteLine("\nErrore! Inserire un valore da cercare!");
+							Console.ResetColor();
+						}
+						else
+						{
+							if (modSearchResult.Item2 == -1)
+							{
+								Console.ForegroundColor = ConsoleColor.Red;
+								Console.WriteLine("\nErrore! Il record cercato non è stato trovato!");
+								Console.ResetColor();
+							}
+							else
+							{
+								int nmCampi = f.ContaCampi(path);
+								string[] modInpts = new string[nmCampi];
+								for (int i = 0; i < nmCampi; i++)
+								{
+									if (f.CheckMioValore(path))
+									{
+										modInpts[9] = rnd.Next(10, 21).ToString();
+										modInpts[10] = "0";
+									}
+									Console.Write($"Inserisci elemento per il campo '{cN[i]}': ");
+									modInpts[i] = Console.ReadLine();
+									if (i == 8)
+										break;
+								}
+								if (f.CheckMioValore(path))
+								{
+									modInpts[9] = rnd.Next(10, 21).ToString();
+									modInpts[10] = "0";
+								}
+								if (!f.CheckLunghezzaInput(nmCampi, modInpts))
+								{
+									if (f.CheckMioValore(path) == true)
+										Console.Write("\nErrore! Alcuni input sono vuoti o troppo lunghi");
+									else
+										Console.Write("\nErrore! Alcuni input sono vuoti o troppo lunghi");
+									return;
+								}
+								else if (!f.CheckInptChar(nmCampi, modInpts))
+								{
+									Console.Write("\nErrore! Alcuni input contengono caratteri non validi ('\\', ';', '#')", "Errore");
+								}
+								else
+								{
+									f.Modifica(path, nmCampi, modInpts, modSearchResult.Item2, lRecord);
+									{
+										Console.ForegroundColor = ConsoleColor.Green;
+										Console.Write("\nModifica effettutata correttamente!");
+										Console.ResetColor();
+									}
+								}
+							}
+						}
 						break;
 					case "8":
 						break;
