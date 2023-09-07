@@ -33,7 +33,7 @@ namespace Console_Ripasso_pre_rientro
 				{
 					default:
 						Console.ForegroundColor = ConsoleColor.Red;
-						Console.Write("\nScelta non valida!");
+						Console.Write("\nScelta non vala!");
 						Console.ResetColor();
 						Console.ReadKey();
 						break;
@@ -100,7 +100,7 @@ namespace Console_Ripasso_pre_rientro
 						}
 						if (!f.CheckInptChar(campi, inputs))
 						{
-							Console.Write("\nErrore! Alcuni input contengono caratteri non validi ('\\', ';', '#')", "Errore");
+							Console.Write("\nErrore! Alcuni input contengono caratteri non vali ('\\', ';', '#')", "Errore");
 						}
 						f.AggiungiInCoda(path, campi, inputs);
 						break;
@@ -190,7 +190,7 @@ namespace Console_Ripasso_pre_rientro
 								}
 								else if (!f.CheckInptChar(nmCampi, modInpts))
 								{
-									Console.Write("\nErrore! Alcuni input contengono caratteri non validi ('\\', ';', '#')", "Errore");
+									Console.Write("\nErrore! Alcuni input contengono caratteri non vali ('\\', ';', '#')", "Errore");
 								}
 								else
 								{
@@ -205,6 +205,115 @@ namespace Console_Ripasso_pre_rientro
 						}
 						break;
 					case "8":
+						bool val;
+						do
+						{
+							Console.Clear();
+							Console.WriteLine("Opzioni cancellazione\n1) Cancella record\n2) Recupera record\n3) Ricompatta database\n");
+							switch (Console.ReadLine())
+							{
+								case "1":
+									val = true;
+									if (!f.CheckMioValore(path))
+									{
+										Console.Clear();
+										Console.ForegroundColor = ConsoleColor.Red;
+										Console.WriteLine("Nel file non sono presenti i campi 'Mio valore' e 'Cancellazione Logica'");
+										Console.ResetColor();
+										Console.Write("\nPremere un tasto per continuare");
+									}
+									else
+									{
+										Console.Clear();
+										Console.WriteLine("Inserire l'elemento da cancellare\n");
+										string elCanc = Console.ReadLine();
+										Tuple<string, int> searchResultCanc = f.Ricerca(path, elCanc, false);
+										if (searchResultCanc.Item2 == -1)
+										{
+											Console.Clear();
+											Console.ForegroundColor = ConsoleColor.Red;
+											Console.WriteLine("Il record cercato non è presente");
+											Console.ResetColor();
+											Console.Write("\nPremere un tasto per continuare");
+										}
+										else
+										{
+											int nCampiCanc = f.ContaCampi(path);
+											f.Cancellazione(path, nCampiCanc, searchResultCanc.Item1, searchResultCanc.Item2, lRecord);
+										}
+									}
+									break;
+								case "2":
+									val = true;
+									if (!f.CheckMioValore(path))
+									{
+										Console.Clear();
+										Console.ForegroundColor = ConsoleColor.Red;
+										Console.WriteLine("Nel file non sono presenti i campi 'Mio valore' e 'Cancellazione Logica'");
+										Console.ResetColor();
+										Console.Write("\nPremere un tasto per continuare");
+									}
+									else
+									{
+										Console.Clear();
+										Console.WriteLine("Inserire l'elemento da cancellare\n");
+										string elCanc = Console.ReadLine();
+										Tuple<string, int> searchResultCanc = f.Ricerca(path, elCanc, true);
+										if (searchResultCanc.Item2 == -1)
+										{
+											Console.Clear();
+											Console.ForegroundColor = ConsoleColor.Red;
+											Console.WriteLine("Il record cercato non è presente");
+											Console.ResetColor();
+											Console.Write("\nPremere un tasto per continuare");
+										}
+										else
+										{
+											int nCampiCanc = f.ContaCampi(path);
+											f.Recupera(path, nCampiCanc, searchResultCanc.Item1, searchResultCanc.Item2, lRecord);
+										}
+									}
+									break;
+								case "3":
+									val = true;
+									if (!f.CheckMioValore(path))
+									{
+										Console.Clear();
+										Console.ForegroundColor = ConsoleColor.Red;
+										Console.WriteLine("Nel file non sono presenti i campi 'Mio valore' e 'Cancellazione Logica'");
+										Console.ResetColor();
+										Console.Write("\nPremere un tasto per continuare");
+									}
+									else
+									{
+										bool valCOMP;
+										do
+										{
+											Console.Clear();
+											Console.WriteLine("Cancellare definitivamente i record eliminati\n1) Si\n0) No\n");
+											switch (Console.ReadLine())
+											{
+												case "1":
+													valCOMP = true;
+													f.Ricompattazione(path, pathTEMP);
+													break;
+												case "0":
+													valCOMP = true;
+													break;
+												default:
+													valCOMP = false;
+													Console.Write("\nOpzione non vala\nPremere un tasto per continuare");
+													break;
+											}
+										} while (!valCOMP);
+									}
+									break;
+								default:
+									val = false;
+									Console.Write("\nOpzione non vala\nPremere un tasto per continuare");
+									break;
+							}
+						} while (!val);
 						break;
 					case "9":
 						Console.Write("Vuoi chiudere davvero il programma? (Y/N) ");
@@ -214,7 +323,7 @@ namespace Console_Ripasso_pre_rientro
 						if (answ.ToUpper() != "N" || answ.ToUpper() != "Y")
 						{
 							Console.ForegroundColor = ConsoleColor.Red;
-							Console.Write("\nScelta non valida!");
+							Console.Write("\nScelta non vala!");
 							Console.ResetColor();
 						}
 						break;
