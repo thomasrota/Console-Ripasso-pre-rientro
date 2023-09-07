@@ -58,7 +58,34 @@ namespace Console_Ripasso_pre_rientro
 						int fields = f.ContaCampi(path);
 						break;
 					case "4":
-						
+						Random r = new Random();
+						int campi = f.ContaCampi(path);
+						string[] inputs = new string[campi];
+						for (int i = 0; i < campi; i++)
+						{
+							if (f.CheckMioValore(path))
+							{
+								inputs[9] = r.Next(10, 21).ToString();
+								inputs[10] = "0";
+							}
+							Console.Write($"Inserisci il campo {i}: ");
+							inputs[i] = Console.ReadLine();
+							if (i == 8)
+								break;
+						}
+						if (!f.CheckLunghezzaInput(campi, inputs))
+						{
+							if (f.CheckMioValore(path) == true)
+								Console.Write("\nErrore! Alcuni input sono vuoti o troppo lunghi");
+							else
+								Console.Write("\nErrore! Alcuni input sono vuoti o troppo lunghi");
+							return;
+						}
+						if (!f.CheckInptChar(campi, inputs))
+						{
+							Console.Write("\nErrore! Alcuni input contengono caratteri non validi ('\\', ';', '#')", "Errore");
+						}
+						f.AggiungiInCoda(path, campi, inputs);
 						break;
 					case "5":
 						break;
