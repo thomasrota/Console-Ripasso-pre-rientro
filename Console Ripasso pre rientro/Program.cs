@@ -55,7 +55,23 @@ namespace Console_Ripasso_pre_rientro
 						Console.ResetColor();
 						break;
 					case "3":
-						int fields = f.ContaCampi(path);
+						int camp = f.ContaCampi(path);
+						string[] maxLen = f.LunghezzaRC(path, camp);
+						Console.Clear();
+						Console.Write($"Il record più lungo è ");
+						Console.ForegroundColor = ConsoleColor.Green;
+						Console.Write($" '{maxLen[camp]}' ");
+						Console.ResetColor();
+						Console.Write($"composto da {maxLen[camp].Length} caratteri\n");
+						for (int i = 0; i < camp; i++)
+						{
+							Console.Write($"Il campo {i} più lungo è");
+							Console.ForegroundColor = ConsoleColor.Green;
+							Console.Write($" {maxLen[i]} ");
+							Console.ResetColor();
+							Console.Write($"composto da {maxLen[i].Length} caratteri\n");
+						}
+						Console.Write("\nPremere un tasto per continuare");
 						break;
 					case "4":
 						string[] campiNomi = f.NomeCampi(path);
