@@ -1,6 +1,7 @@
 ﻿using Form_Ripasso_pre_rientro;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -105,6 +106,125 @@ namespace Console_Ripasso_pre_rientro
 						f.AggiungiInCoda(path, campi, inputs);
 						break;
 					case "5":
+						Console.Clear();
+						Console.WriteLine("Inserire numero del primo campo: ");
+						string primoCampoS = Console.ReadLine();
+						int primoCampo;
+						if (primoCampoS.Length == 1 && primoCampoS[0] > 47 && primoCampoS[0] < 58)
+							primoCampo = int.Parse(primoCampoS);
+						else
+						{
+							Console.Clear();
+							Console.ForegroundColor = ConsoleColor.Red;
+							Console.WriteLine("Il campo inserito non è valido");
+							Console.ResetColor();
+							Console.WriteLine("\nPremere un tasto per continuare\n");
+							Console.ReadKey();
+							break;
+						}
+						Console.Clear();
+						Console.WriteLine("Inserire numero del primo campo: ");
+						string secondoCampoS = Console.ReadLine();
+						int secondoCampo;
+						if (secondoCampoS.Length == 1 && secondoCampoS[0] > 47 && secondoCampoS[0] < 58)
+							secondoCampo = int.Parse(secondoCampoS);
+						else
+						{
+							Console.Clear();
+							Console.ForegroundColor = ConsoleColor.Red;
+							Console.WriteLine("Il campo inserito non è valido");
+							Console.ResetColor();
+							Console.WriteLine("\nPremere un tasto per continuare\n");
+							Console.ReadKey();
+							break;
+						}
+						Console.Clear();
+						Console.WriteLine("Inserire numero del primo campo: ");
+						string terzoCampoS = Console.ReadLine();
+						int terzoCampo;
+						if (terzoCampoS.Length == 1 && terzoCampoS[0] > 47 && terzoCampoS[0] < 58)
+							terzoCampo = int.Parse(terzoCampoS);
+						else
+						{
+							Console.Clear();
+							Console.ForegroundColor = ConsoleColor.Red;
+							Console.WriteLine("Il campo inserito non è valido");
+							Console.ResetColor();
+							Console.WriteLine("\nPremere un tasto per continuare\n");
+							Console.ReadKey();
+							break;
+						}
+						int numFieldsVIS = f.ContaCampi(path);
+						int[] checkEd = new int[numFieldsVIS];
+						for (int i = 0; i < numFieldsVIS; i++)
+							checkEd[i] = 0;
+						if (primoCampo == 0 || secondoCampo == 0 || terzoCampo == 0) checkEd[0] = 1;
+						if (primoCampo == 1 || secondoCampo == 1 || terzoCampo == 1) checkEd[1] = 1;
+						if (primoCampo == 2 || secondoCampo == 2 || terzoCampo == 2) checkEd[2] = 1;
+						if (primoCampo == 3 || secondoCampo == 3 || terzoCampo == 3) checkEd[3] = 1;
+						if (primoCampo == 4 || secondoCampo == 4 || terzoCampo == 4) checkEd[4] = 1;
+						if (primoCampo == 5 || secondoCampo == 5 || terzoCampo == 5) checkEd[5] = 1;
+						if (primoCampo == 6 || secondoCampo == 6 || terzoCampo == 6) checkEd[6] = 1;
+						if (primoCampo == 7 || secondoCampo == 7 || terzoCampo == 7) checkEd[7] = 1;
+						if (primoCampo == 8 || secondoCampo == 8 || terzoCampo == 8) checkEd[8] = 1;
+						if (numFieldsVIS > 9)
+							if (primoCampo == 9 || secondoCampo == 9 || terzoCampo == 9) checkEd[9] = 1;
+							else
+							if (primoCampo == 9 || secondoCampo == 9 || terzoCampo == 9)
+							{
+								Console.Clear();
+								Console.ForegroundColor = ConsoleColor.Red;
+								Console.WriteLine("Il campo Miovalore non è presente nel file");
+								Console.ResetColor();
+								Console.WriteLine("\nPremere un tasto per continuare\n");
+								Console.ReadKey();
+								break;
+							}
+						string[] names = f.NomeCampi(path);
+						Console.Clear();
+						using (StreamReader csvReader = File.OpenText(path))
+						{
+							string lineFromFile;
+							lineFromFile = csvReader.ReadLine();
+							while ((lineFromFile = csvReader.ReadLine()) != null)
+							{
+								string[] fieldsVIS = lineFromFile.Split(';');
+								if (numFieldsVIS == 11)
+								{
+									if (fieldsVIS[10] == "0")
+									{
+										Console.WriteLine();
+										for (int i = 0; i < numFieldsVIS; i++)
+										{
+											if (checkEd[i] == 1)
+											{
+												Console.Write($"{names[i]}: ");
+												Console.ForegroundColor = ConsoleColor.Green;
+												Console.Write($"{fieldsVIS[i]} ");
+												Console.ResetColor();
+											}
+										}
+									}
+								}
+								else
+								{
+									Console.WriteLine();
+									for (int i = 0; i < numFieldsVIS; i++)
+									{
+										if (checkEd[i] == 1)
+										{
+											Console.Write($"{names[i]}: ");
+											Console.ForegroundColor = ConsoleColor.Green;
+											Console.Write($"{fieldsVIS[i]} ");
+											Console.ResetColor();
+										}
+									}
+								}
+							}
+							csvReader.Close();
+							Console.WriteLine("\n\nPremere un tasto per continuare\n");
+							Console.ReadKey();
+						}
 						break;
 					case "6":
 						Console.Clear();
