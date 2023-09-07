@@ -58,6 +58,7 @@ namespace Console_Ripasso_pre_rientro
 						int fields = f.ContaCampi(path);
 						break;
 					case "4":
+						string[] campiNomi = f.NomeCampi(path);
 						Random r = new Random();
 						int campi = f.ContaCampi(path);
 						string[] inputs = new string[campi];
@@ -68,7 +69,7 @@ namespace Console_Ripasso_pre_rientro
 								inputs[9] = r.Next(10, 21).ToString();
 								inputs[10] = "0";
 							}
-							Console.Write($"Inserisci il campo {i}: ");
+							Console.Write($"Inserisci elemento per il campo '{campiNomi[i]}': ");
 							inputs[i] = Console.ReadLine();
 							if (i == 8)
 								break;
