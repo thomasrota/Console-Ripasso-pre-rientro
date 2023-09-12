@@ -34,7 +34,7 @@ namespace Console_Ripasso_pre_rientro
 				{
 					default:
 						Console.ForegroundColor = ConsoleColor.Red;
-						Console.Write("\nScelta non vala!");
+						Console.Write("\nScelta non valida!");
 						Console.ResetColor();
 						Console.ReadKey();
 						break;
@@ -443,7 +443,7 @@ namespace Console_Ripasso_pre_rientro
 						if (answ.ToUpper() != "N" || answ.ToUpper() != "Y")
 						{
 							Console.ForegroundColor = ConsoleColor.Red;
-							Console.Write("\nScelta non vala!");
+							Console.Write("\nScelta non valida!");
 							Console.ResetColor();
 						}
 						break;
