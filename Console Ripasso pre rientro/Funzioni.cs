@@ -190,10 +190,13 @@ namespace Form_Ripasso_pre_rientro
             for (int i = 0; i < nCampi; i++)
                 line += inputs[i] + ";";
             line = line.Replace('\uFFFD', '\'');
-            using (StreamWriter sw = new StreamWriter(path, append: true))
+            line = (line.PadRight(500) + "##");
+            using (FileStream rw = new FileStream(path, FileMode.Open, FileAccess.ReadWrite))
             {
-                sw.WriteLine(line.PadRight(500) + "##");
-                sw.Close();
+                byte[] bytes = Encoding.UTF8.GetBytes(line);
+                rw.Seek(0, SeekOrigin.End);
+                rw.Write(bytes, 0, bytes.Length);
+                rw.Close();
             }
         }
         // Ricercare un record per campo chiave a scelta (se esiste, utilizzare il campo che contiene dati univoci);
